@@ -36,6 +36,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span class="fw-bold">{{ $task->task }}</span>
                         <div>
+                            <span class="fw">{{ $task->date }}</span>
                             <!-- Кнопка изменения -->
                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editTaskModal{{ $task->id }}">
                                 <i class="bi bi-pencil"></i>
