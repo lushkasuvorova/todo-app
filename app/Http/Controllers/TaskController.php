@@ -23,20 +23,12 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'task' => 'required|string|max:255'
-        ]);
-
         $this->taskService->createTask($request->task);
         return redirect()->route('tasks.index')->with('success', 'Задача добавлена!');
     }
 
     public function update(Request $request, Task $task)
     {
-        $request->validate([
-            'task' => 'required|string|max:255'
-        ]);
-
         $this->taskService->updateTask($task, $request->task);
         return redirect()->route('tasks.index')->with('success', 'Задача обновлена!');
     }
@@ -47,4 +39,5 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Задача удалена!');
     }
 }
+
 

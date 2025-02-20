@@ -3,27 +3,33 @@
 namespace App\Services;
 
 use App\Models\Task;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class TaskService
 {
-    public function getAllTasks()
+    public function getAllTasks(): Collection
     {
         return Task::all();
     }
 
-    public function createTask(string $taskName)
+    public function createTask(string $taskName): Task
     {
-        return Task::create(['task' => $taskName]);
+        $task = new Task(['task' => $taskName]);
+        $task->validate();
+        $task->save();
+        return $task;
     }
 
-    public function updateTask(Task $task, string $newName)
+    public function updateTask(Task $task, string $newName): bool
     {
-        return $task->update(['task' => $newName]);
+        $task->task = $newName;
+        $task->validate();
+        return $task->save();
     }
 
-    public function deleteTask(Task $task)
+    public function deleteTask(Task $task): bool
     {
         return $task->delete();
     }
 }
+
