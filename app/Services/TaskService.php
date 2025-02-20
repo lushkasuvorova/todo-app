@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Validation\ValidationException;
 
 class TaskService
 {
@@ -12,24 +13,29 @@ class TaskService
         return Task::all();
     }
 
-    public function createTask(string $taskName): Task
+    public function createTask(array $data): Task
     {
-        $task = new Task(['task' => $taskName]);
+        $task = new Task($data);
         $task->validate();
         $task->save();
         return $task;
     }
 
-    public function updateTask(Task $task, string $newName): bool
+    public function updateTask(int $id, array $data): Task
     {
-        $task->task = $newName;
+        $task = Task::findOrFail($id);
+        $task->fill($data);
         $task->validate();
-        return $task->save();
+        $task->save();
+        return $task;
     }
 
-    public function deleteTask(Task $task): bool
+    public function deleteTask(int $id): void
     {
-        return $task->delete();
+        $task = Task::findOrFail($id);
+        $task->delete();
     }
 }
+
+
 
