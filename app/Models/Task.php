@@ -39,8 +39,8 @@ class Task extends Model
     }
 
     // Мутатор для автоочистки ввода
-    // public function setTaskAttribute($value)
-    // {
-    //     $this->attributes['task'] = trim(strip_tags($value)); // Убираем лишние пробелы и HTML-теги
-    // }
+    public function setTaskAttribute($value)
+    {
+        $this->attributes['task'] = trim(strip_tags($value)); // Убираем лишние пробелы и HTML-теги
+    }
 }
