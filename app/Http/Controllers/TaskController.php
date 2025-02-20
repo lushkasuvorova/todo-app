@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Services\TaskService;
 
 class TaskController extends Controller
 {
+    protected $taskService;
+
+    public function __construct(TaskService $taskService)
+    {
+        $this->taskService = $taskService;
+    }
+
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = $this->taskService->getAllTasks();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -19,8 +27,7 @@ class TaskController extends Controller
             'task' => 'required|string|max:255'
         ]);
 
-        Task::create(['task' => $request->task]);
-
+        $this->taskService->createTask($request->task);
         return redirect()->route('tasks.index')->with('success', 'Задача добавлена!');
     }
 
@@ -30,14 +37,14 @@ class TaskController extends Controller
             'task' => 'required|string|max:255'
         ]);
 
-        $task->update(['task' => $request->task]);
-
+        $this->taskService->updateTask($task, $request->task);
         return redirect()->route('tasks.index')->with('success', 'Задача обновлена!');
     }
 
     public function destroy(Task $task)
     {
-        $task->delete();
+        $this->taskService->deleteTask($task);
         return redirect()->route('tasks.index')->with('success', 'Задача удалена!');
     }
 }
+
