@@ -25,15 +25,6 @@ services:
     command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
     ports:
       - "8000:8000"  # Laravel будет доступен на порту 8000
-    environment:
-      APP_ENV: production
-      APP_KEY: base64:VMsLnlE+XYN6uEasK38eXSNFULhsLv6xSm1Dg+3qUg0=
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: todo_db
-      DB_USERNAME: user
-      DB_PASSWORD: userpassword
     networks:
       - network-todo
 
